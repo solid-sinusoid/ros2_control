@@ -2526,6 +2526,11 @@ rclcpp::NodeOptions ControllerManager::determine_controller_node_options(
   }
 
   controller_node_options = controller_node_options.arguments(node_options_arguments);
+
+  if (this->has_parameter("robot_description")) {
+    std::string robot_description = this->get_parameter("robot_description").as_string();
+    controller_node_options.append_parameter_override("robot_description", robot_description.c_str());
+  }
   return controller_node_options;
 }
 
